@@ -132,7 +132,7 @@ class HyperCycleClient:
     @classmethod
     def resume_deposit(cls, node, txid, sender, currency, driver):
         driver = client_config['driver']
-        headers = {"tx-id": txid, "tx-sender":sender, 'currency-type': currency_type, 'tx-driver': driver}
+        headers = {"tx-id": txid, "tx-sender":sender, 'currency-type': currency, 'tx-driver': driver}
         res = requests.post(f"http://{node}/balance", "",  headers=headers).json()
         return res
 
