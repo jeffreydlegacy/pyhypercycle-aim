@@ -1,0 +1,23 @@
+{"test": "telemetry_ok", "ts": "2026-01-04T23:50:21.453998Z"}
+{"type": "handle_message", "route": "language_es", "issue": "login", "ts": "2026-01-05T00:57:06.215817Z"}
+{"type": "handle_message", "route": "language_es", "issue": "login", "ts": "2026-01-05T00:58:53.806804Z"}
+{"type": "handle_message", "route": "language_es", "issue": "login", "ts": "2026-01-05T00:58:55.640572Z"}
+{"type": "handle_message", "route": "human_billing", "issue": "billing", "escalate": true, "ts": "2026-01-05T14:45:44.622109Z"}
+{"type": "handle_message", "route": "human_billing", "issue": "billing", "escalate": true, "ts": "2026-01-05T14:49:11.654881Z"}
+{"type": "handle_message", "route": "human_billing", "issue": "billing", "escalate": true, "ts": "2026-01-05T15:04:02.085430Z"}
+{"type": "handle_message", "route": "human_billing", "issue": "billing", "escalate": true, "ts": "2026-01-05T15:27:39.622849Z"}
+{"type": "handle_message", "route": "human_billing", "issue": "billing", "escalate": true, "ts": "2026-01-05T15:57:13.197459Z"}
+{"type": "handle_message", "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-05T16:42:38.858496Z"}
+{"type": "handle_message", "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-05T17:56:48.484126Z"}
+{"type": "handle_message", "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-05T18:15:37.475259Z"}
+{"type": "handle_message", "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-05T19:03:29.742409Z"}
+{"type": "handle_message", "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-05T19:26:57.611003Z"}
+{"type": "handle_message", "request_id": 1767650778813, "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-05T22:06:18.905721Z"}
+{"type": "handle_message", "request_id": 1767705678875, "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-06T13:21:18.977486Z"}
+{"type": "handle_message", "request_id": 1767707268454, "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-06T13:47:48.541555Z"}
+{"type": "handle_message", "request_id": 1767709610757, "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-06T14:26:50.848642Z"}
+{"type": "handle_message", "request_id": 1767726639783, "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-06T19:10:39.879989Z"}
+{"type": "handle_message", "request_id": "78c9a00bb7b54c47ab52f70fe738cfa2", "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-06T20:02:55.797731Z"}
+{"type": "handle_message", "request_id": "0fc40e7fab7845fa9b02a00320a02078", "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-06T21:14:58.278072Z"}
+{"type": "handle_message", "request_id": "602cf62fb30c4d488e1fb7dc1df26e00", "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-06T21:18:53.027849Z"}
+{"type": "handle_message", "request_id": "6981dfa241134202ba5341c756e5ef72", "route": "human_billing", "issue": "billing", "confidence": 0.9, "escalate": true, "ts": "2026-01-06T22:03:57.810638Z"}
