@@ -17,7 +17,12 @@ from aims.telemetry.logger import log_event
 TELEMETRY_MAX = 200
 telemetry_buffer = deque(maxlen=TELEMETRY_MAX)
 
-app = FastAPI(title="Hypercycle AIM")
+app= FastAPI(title="Hypercycle AIM")
+
+@app.get("/health")
+def health():
+    return {"status": "ok", "version": APP_VERSION, "started_at": STARTED_AT}
+
 
 from enum import Enum
 
@@ -37,6 +42,7 @@ class MetaOut(BaseModel):
     ts: str
     elapsed_ms: float
     request_id: str
+    decision_trace: Optional[Dict[str, Any]] = None
 
 # ! PUBLIC API CONTRACT
 # Any change to HandleOut (or /handle response shape) MUST update tests/test_handle_contract.py
@@ -58,6 +64,7 @@ class HandleOut(BaseModel):
 def handle(msg: MessageIn) -> HandleOut:
     request_id = uuid.uuid4().hex
     t0 = time.perf_counter()
+    decision_trace = None
   
     # Run classifier / router
     result = handle_message(msg.message)
@@ -77,16 +84,49 @@ def handle(msg: MessageIn) -> HandleOut:
         }) 
         issue = Issue.other
 
-    confidence = 0.90 if issue == Issue.billing else 0.60
+    # Confidence heuristic (deterministic, explainable)
+    if issue == Issue.billing:
+        confidence = 0.90
+    elif route == "container_startup_errors":
+        confidence = 0.75
+    elif route.startswith("language_"):
+        confidence = 0.80
+    else:
+        confidence = 0.60
 
 
-    # billing -> human escalation
+    # Esculation policy (single source of truth)
     escalate = (issue ==Issue.billing)
     if escalate:
         route = "human_billing"
 
+    # Decision trace (explanability, no side effects)
+    decision_trace = {
+        "router_result": result.get("route"),
+        "normalized_route": route,
+        "raw_issue": raw_issue,
+        "final_issue": issue.value,
+        "confidence_rule": (
+            "billing"
+            if issue == Issue.billing
+            else "language"
+            if route.startswith("language_")
+            else "default"
+        )
+
+}
     ts = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     elapsed_ms = round((time.perf_counter() - t0) * 1000, 2)
+
+    log_event({
+        "type": "handle_complete",
+        "route": route,
+        "issue": issue.value,
+        "confidence": confidence,
+        "escalate": escalate,
+        "elapsed_ms": elapsed_ms,
+        "request_id": request_id,
+    })
 
 
     out = HandleOut(
@@ -99,13 +139,14 @@ def handle(msg: MessageIn) -> HandleOut:
             ts=ts,
             elapsed_ms=elapsed_ms,
             request_id=request_id,
+            decision_trace=decision_trace,
         ),
 )   
 
 
     # Telemetry (stable fields too)
     payload = {
-        "type": "handle_message",
+        "type": "handle_complete",
         "request_id": request_id,
         "route": out.route,
         "issue": out.issue.value,

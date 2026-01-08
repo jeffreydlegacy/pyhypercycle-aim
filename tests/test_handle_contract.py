@@ -16,7 +16,7 @@ def test_handle_contract_and_telemetry(monkeypatch):
     # 1) Force handle_message() to return a predictable result
     def fake_handle_message(message: str):
         return {
-            "route": "human_building",
+            "route": "human_billing",
             "issue": "billing",
             "reply": "Test reply",
         }
@@ -39,7 +39,7 @@ def test_handle_contract_and_telemetry(monkeypatch):
 
     # --- GOLDEN RESPONSE CONTRACT (this is what we are "locking") ---
     # Required top-level keys
-    assert set(["route", "issue", "confidence", "reply", "escalate", "meta"]).issubset(data.keys())
+    assert set(("route", "issue", "confidence", "reply", "escalate", "meta")).issubset(data.keys())
 
     # Types / shapes
     assert isinstance(data["route"], str)
@@ -66,7 +66,7 @@ def test_handle_contract_and_telemetry(monkeypatch):
     # --- TELEMETRY CONTRACT (stable fields) ---
     assert len(captured) >= 1
     event = captured[-1]
-    assert event.get("type") == "handle_message"
+    assert event.get("type") == "handle_complete"
     assert "route" in event
     assert "issue" in event
     assert "confidence" in event
